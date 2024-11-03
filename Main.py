@@ -18,7 +18,7 @@ UI_TIME_BAR_LENGHT = 600 #time bar lenght
 UI_TIME_BAR_WIDTH =30 
 MAXIMUM_LEVEL = 5
 LIVES = 10
-GAME_TIME = 240
+GAME_TIME = 120
 SHOW_HINT_TIME = 20
 
 XMARGIN = (S_WIDTH - (BOX_SIZE *BOARD_WIDHT)) // 2
@@ -78,6 +78,8 @@ lollogo = pygame.transform.scale(lollogo,(45,45,))
 startBG = pygame.image.load('background/startBG.jpeg')
 startBG = pygame.transform.scale(startBG,(S_WIDTH,S_HEIGHT))
 
+background_surface = pygame.Surface((S_WIDTH, S_HEIGHT), pygame.SRCALPHA)
+background_surface.fill((255, 255, 255, 80)) 
 # Path to the background directory
 background_path = os.path.join(PATH, "background")
 
@@ -429,11 +431,13 @@ def drawTimeBar():
     pygame.draw.rect(DISPLAYSURF,bar_color,(inner_pos,inner_size))
 
 def showGameOverScreen():
-    playAgainFont = pygame.font.Font('freesansbold.tft',50)
-    playAgainSurf = playAgainFont.render('Play Again?', True, PURPLE)
+    playAgainFont = pygame.font.SysFont('VNCOOPER-MEDIUM',60)
+    playAgainSurf = playAgainFont.render('Play Again?', False, RED)
     playAgainRect = playAgainSurf.get_rect()
     playAgainRect.center = (S_WIDTH//2,S_HEIGHT//2)
-    pygame.draw.rect(DISPLAYSURF,PURPLE, playAgainRect,4)
+    DISPLAYSURF.blit(background_surface, (0, 0))
+    DISPLAYSURF.blit(playAgainSurf, playAgainRect)
+    pygame.draw.rect(DISPLAYSURF,RED, playAgainRect,4)
     pygame.display.update()
     
     while True:
