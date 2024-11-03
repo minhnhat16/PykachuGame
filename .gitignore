@@ -14,15 +14,6 @@ venv/
 .env
 .venv/
 
-# Image files (add more formats as needed)
-*.png
-*.jpg
-*.jpeg
-*.gif
-*.bmp
-*.tiff
-*.svg
-*.ico
 
 # Other common files
 .DS_Store
