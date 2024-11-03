@@ -9,12 +9,12 @@ from collections import defaultdict
 TARGET_FPS = 30
 S_WIDTH = 1280 #window width
 S_HEIGHT = 720 # window height
-BOX_SIZE = 75
+BOX_SIZE = 60
 BOARD_WIDHT = 14
 BOARD_HEIGHT = 9
 NUMBER_PAIRS = 21 #NUMHEROES_ONBOARD
 REPEAT_PAIR_MAXIMUM = 4 # number pair can repeat
-UI_TIME_BAR_LENGHT = 300 #time bar lenght
+UI_TIME_BAR_LENGHT = 600 #time bar lenght
 UI_TIME_BAR_WIDTH =30 
 MAXIMUM_LEVEL = 5
 LIVES = 10
@@ -42,7 +42,7 @@ BORDERCORLOR = RED
 
 
 # setting up time bar
-bar_position = (S_WIDTH // 2 - UI_TIME_BAR_LENGHT // 22, YMARGIN //2  - UI_TIME_BAR_WIDTH//2)
+bar_position = (S_WIDTH // 2 - UI_TIME_BAR_LENGHT  // 22, YMARGIN //2  - UI_TIME_BAR_WIDTH//2 +2 )
 bar_size = (UI_TIME_BAR_LENGHT,UI_TIME_BAR_WIDTH)
 borderColor = WHITE
 bar_color = DARK_GREEN
@@ -425,7 +425,7 @@ def drawTimeBar():
     
     pygame.draw.rect(DISPLAYSURF,borderColor, (bar_position, bar_size), 1)
     inner_pos = (bar_position[0] + 2 , bar_position[1] + 2)
-    inner_size = (bar_size[0] -4 * progress,bar_size[1] -4)
+    inner_size = ((bar_size[0] -4 ) * progress,bar_size[1] -4)
     pygame.draw.rect(DISPLAYSURF,bar_color,(inner_pos,inner_size))
 
 def showGameOverScreen():
@@ -499,65 +499,66 @@ def isGameComplete(board):
 
 
 def alterBoardWithLevevel(board, boxY1,boxX1, boxY2,boxX2,level):
-        if level == 2:
-            for boxX in (boxX1,boxX2):
-                cur_list = [0]
-                for i in  range(BOARD_HEIGHT):
-                    if board[i][boxX] != 0:
-                        cur_list.append(board[i][boxX])
-                    while len(cur_list) < BOARD_HEIGHT:
-                        cur_list.append(0)
-                        
-                    j = 0 
-                    for num in cur_list:
-                        board[j][boxX] = num
-                        j += 1
-                        
-        if level == 3:
-            for boxX in (boxX1,boxX2):
-                cur_list = []
-                for i in range(BOARD_HEIGHT):
-                    if board[i][boxX] != 0:
-                        cur_list.append(board[i][boxX])
-                    cur_list.append(0)
-                    cur_list = [0] * (BOARD_HEIGHT - len(cur_list)) +cur_list
-                    
-                    j = 0 
-                    for num in cur_list:
-                        board[j][boxX] = num
-                        j += 1 
-                    
-                    
-        if level == 4:
-            for boxY in (boxY1, boxY2):
-                cur_list = [0]
-                for i in range(BOARD_WIDHT):
-                    if board[boxY][i] != 0:
-                        cur_list.append(board[boxY][i])
-                while len(cur_list) < BOARD_WIDHT:
-                    cur_list.append(0)
-                    
-                j = 0
-                
-                for num in cur_list:
-                    board[boxY][j] = num
-                    j += 1 
-            
-        if level == 5:
-            for boxY in (boxY1,boxY2):
-                cur_list = []
-                for i in range(BOARD_WIDHT):
-                    if board[boxY][i] !=0:
-                        cur_list.append(board[boxY][i])
+   
+    if level == 2:
+        for boxX in (boxX1,boxX2):
+            cur_list = [0]
+            for i in  range(BOARD_HEIGHT):
+                if board[i][boxX] != 0:
+                    cur_list.append(board[i][boxX])
+            while len(cur_list) < BOARD_HEIGHT:
                 cur_list.append(0)
-                cur_list = [0] * (BOARD_WIDHT- len(cur_list)) + cur_list    
                 
                 j = 0 
-                for num in cur_list: 
-                    board[boxY][j] = num
+                for num in cur_list:
+                    board[j][boxX] = num
                     j += 1
+                        
+    if level == 3:
+        for boxX in (boxX1,boxX2):
+            cur_list = []
+            for i in range(BOARD_HEIGHT):
+                if board[i][boxX] != 0:
+                    cur_list.append(board[i][boxX])
+                cur_list.append(0)
+                cur_list = [0] * (BOARD_HEIGHT - len(cur_list)) + cur_list
+                
+                j = 0 
+                for num in cur_list:
+                    board[j][boxX] = num
+                    j += 1 
+                
+                    
+    if level == 4:
+        for boxY in (boxY1, boxY2):
+            cur_list = [0]
+            for i in range(BOARD_WIDHT):
+                if board[boxY][i] != 0:
+                    cur_list.append(board[boxY][i])
+            while len(cur_list) < BOARD_WIDHT:
+                cur_list.append(0)
+                
+            j = 0
+            
+            for num in cur_list:
+                board[boxY][j] = num
+                j += 1 
+            
+    if level == 5:
+        for boxY in (boxY1,boxY2):
+            cur_list = []
+            for i in range(BOARD_WIDHT):
+                if board[boxY][i] !=0:
+                    cur_list.append(board[boxY][i])
+            cur_list.append(0)
+            cur_list = [0] * (BOARD_WIDHT- len(cur_list)) + cur_list    
+            
+            j = 0 
+            for num in cur_list: 
+                board[boxY][j] = num
+                j += 1
         
-        return board    
+    return board    
 
 def drawLives():
     logoRect =  pygame.Rect(10,10,BOX_SIZE,BOX_SIZE)
